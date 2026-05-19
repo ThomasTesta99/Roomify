@@ -4,6 +4,10 @@ interface AuthState {
   userId: string | null;
 }
 
+interface UploadProps {
+    onComplete?: (base64Data: string) => void;
+}
+
 type AuthContext = {
     isSignedIn: boolean;
     userName: string | null;
