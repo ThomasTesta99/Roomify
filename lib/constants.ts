@@ -1,5 +1,5 @@
 export const PUTER_WORKER_URL = import.meta.env.VITE_PUTER_WORKER_URL || "";
-
+export const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 // Storage Paths
 export const STORAGE_PATHS = {
     ROOT: "roomify",

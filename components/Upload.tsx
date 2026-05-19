@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {useOutletContext} from "react-router";
 import {CheckCircle2, ImageIcon, UploadIcon} from "lucide-react";
-import {PROGRESS_INCREMENT, REDIRECT_DELAY_MS, PROGRESS_INTERVAL_MS} from "../lib/constants";
+import {PROGRESS_INCREMENT, REDIRECT_DELAY_MS, PROGRESS_INTERVAL_MS, ALLOWED_TYPES} from "../lib/constants";
 
 const Upload = ({ onComplete }: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
@@ -31,13 +31,27 @@ const Upload = ({ onComplete }: UploadProps) => {
         setFile(file);
         setProgress(0);
 
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+
         const reader = new FileReader();
         reader.onerror = () => {
             setFile(null);
             setProgress(0);
         };
-        reader.onloadend = () => {
-            const base64Data = reader.result as string;
+        reader.onload = () => {
+            if (typeof reader.result !== "string") {
+                setFile(null);
+                setProgress(0);
+                return;
+            }
+            const base64Data = reader.result;
 
             intervalRef.current = setInterval(() => {
                 setProgress((prev) => {
@@ -77,8 +91,7 @@ const Upload = ({ onComplete }: UploadProps) => {
         if (!isSignedIn) return;
 
         const droppedFile = e.dataTransfer.files[0];
-        const allowedTypes = ['image/jpeg', 'image/png'];
-        if (droppedFile && allowedTypes.includes(droppedFile.type)) {
+        if (droppedFile && ALLOWED_TYPES.includes(droppedFile.type as (typeof ALLOWED_TYPES)[number])) {
             processFile(droppedFile);
         }
     };
@@ -87,7 +100,7 @@ const Upload = ({ onComplete }: UploadProps) => {
         if (!isSignedIn) return;
 
         const selectedFile = e.target.files?.[0];
-        if (selectedFile) {
+        if (selectedFile && ALLOWED_TYPES.includes(selectedFile.type as (typeof ALLOWED_TYPES)[number])) {
             processFile(selectedFile);
         }
     };
