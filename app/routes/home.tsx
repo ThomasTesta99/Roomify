@@ -36,8 +36,7 @@ export default function Home() {
       console.error("Failed to create project");
       return false;
     }
-    setProjects((prev) => [newItem, ...prev]);
-
+    setProjects((prev) => [saved, ...prev]);
     navigate(`/visualizer/${newId}`, {
       state: {
         initalImage: saved.sourceImage, 
