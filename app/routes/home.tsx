@@ -7,8 +7,8 @@ import { useNavigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Roomify" },
+    { name: "description", content: "Roomify is a AI-first design environment that helps you visualize, render and ship architectural projects faster than ever." },
   ];
 }
 
