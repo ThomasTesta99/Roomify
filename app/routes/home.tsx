@@ -44,8 +44,6 @@ export default function Home() {
         name, 
       }
     });
-      }
-    });
     return true;
   }
 
