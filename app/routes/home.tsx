@@ -39,9 +39,11 @@ export default function Home() {
     setProjects((prev) => [saved, ...prev]);
     navigate(`/visualizer/${newId}`, {
       state: {
-        initalImage: saved.sourceImage, 
-        initalRendered: saved.renderedImage || null,
+        initialImage: saved.sourceImage, 
+        initialRender: saved.renderedImage || null,
         name, 
+      }
+    });
       }
     });
     return true;
