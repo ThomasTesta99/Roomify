@@ -86,7 +86,7 @@ const VisualizerId = () => {
           </div>
 
 
-          <div className={`render-area ${isProcessing ? 'is-procssing' : ''}`}>
+          <div className={`render-area ${isProcessing ? 'is-processing' : ''}`}>
             {currentImage ? (
               <img src={currentImage} alt="Ai Render" className='rendered-img' />
             ): (
